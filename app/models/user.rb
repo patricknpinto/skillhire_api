@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates :name, :username, presence: true
 
-  validates :username, uniqueness: true
+  validates :username, uniqueness: true, format: { with: /\A[a-zA-Z0-9-_]+\Z/ }
 
   has_many :followings, foreign_key: 'followed_id', class_name: 'Following'
   has_many :followers, through: :followings

@@ -19,7 +19,7 @@ module Api
       if following.valid?
         head :created
       else
-        render json: { error: 'Already following' }, status: :unprocessable_entity
+        render json: { errors: following.errors }, status: :unprocessable_entity
       end
     end
 
