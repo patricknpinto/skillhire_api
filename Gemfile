@@ -29,6 +29,7 @@ gem 'puma', '~> 3.11'
 # gem 'rack-cors'
 
 gem 'fast_jsonapi'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
