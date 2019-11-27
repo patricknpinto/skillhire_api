@@ -1,16 +1,12 @@
 module Api
   class UsersController < ApplicationController
-    def show
-      @user = User.find(params[:id])
-    end
-
     def create
       @user = User.new(user_params)
 
       if @user.save
-        render :show, status: :created
+        render json: UserSerializer.new(@user), status: :created
       else
-        render :show, status: :unprocessable_entity
+        render json: UserSerializer.new(@user), status: :unprocessable_entity
       end
     end
 
@@ -23,7 +19,7 @@ module Api
       if following.valid?
         head :created
       else
-        render json: { error: 'already following' }, status: :unprocessable_entity
+        render json: { error: 'Already following' }, status: :unprocessable_entity
       end
     end
 
@@ -34,13 +30,14 @@ module Api
       if followed.unfollow(follower)
         head :no_content
       else
-        render json: { error: "not following user #{params[:id]}" }, status: :unprocessable_entity
+        render json: { error: "Not following user #{params[:id]}" }, status: :unprocessable_entity
       end
     end
 
     def followers
       @user = User.find(params[:id])
       @users = @user.followers.order(:username)
+      render json: UserSerializer.new(@users)
     end
 
     private
